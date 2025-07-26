@@ -1,0 +1,13 @@
+
+services:
+  backend:
+    image: kpa-backend
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: dev
+    env_file: ./dockerfile.env
+    ports:
+      - "7878:7878"
+    volumes:
+      - ".:/kpa-backend"
