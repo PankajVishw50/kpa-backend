@@ -2,6 +2,7 @@
 services:
   backend:
     image: kpa-backend
+    restart: unless-stopped
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -11,3 +12,25 @@ services:
       - "7878:7878"
     volumes:
       - ".:/kpa-backend"
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  postgres:
+    image: postgres:17
+    env_file: ./postgres.env
+    restart: unless-stopped
+    ports:
+     - "5432:5432"
+    networks:
+      - backend
+    volumes:
+      - "kpa_db:/var/lib/postgresql/data"
+
+volumes:
+  kpa_db:
+
+networks:
+  backend:
+
