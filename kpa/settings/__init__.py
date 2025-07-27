@@ -29,7 +29,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_extensions",
     "account",
+    "forms",
 ]
 
 MIDDLEWARE = [
@@ -86,6 +88,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Django Extensions related settings
+SHELL_PLUS_PRINT_SQL = True
+SHELL_PLUS_PRE_IMPORTS = [
+    ("forms.serializers", "*"),
+]
+
 
 # Load local settigns
 LOCAL_SETTING_PATH = os.getenv("LOCAL_SETTING_PATH", "local/local.settings.py")
@@ -95,4 +103,4 @@ LOCAL_SETTING_PATH = (
     else str(BASE_DIR / LOCAL_SETTING_PATH)
 )
 
-include(optional(LOCAL_SETTING_PATH))
+include("application.settings.py", optional(LOCAL_SETTING_PATH))
