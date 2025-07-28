@@ -1,0 +1,309 @@
+openapi: 3.0.0
+info:
+  title: kpa form 
+  version: 0.1.0-alpha
+  contact:
+    name: Pankaj Vishw
+    email: vishw.dev.1000@gmail.com
+servers:
+  - url: http://localhost:{port}/api
+    variables:
+      port:
+        default: "7878"
+
+tags:
+  - name: Wheel Specification
+
+components:
+  schemas:
+    ListPayload:
+      type: object
+      properties:
+        count:
+          type: integer
+          description: Total items available to fetch
+          example: 532
+        next:
+          type: string
+          format: url
+          description: URL to fetch next page
+          example: http://localhost:7878/api/resource?page=2
+        previous:
+          type: string
+          format: url
+          description: URL to fetch previous page
+          example: http://localhost:7878/api/resource?page=1
+        results:
+          type: array
+      required:
+        - count
+        - next
+        - previous
+        - results
+
+    WheelSpecs:
+      type: object
+      properties:
+        form_number:
+          type: string
+          example: "WHEEL-2025-001"
+        submitted_by:
+          type: string
+          example: "user_id_123"
+        submitted_date:
+          type: string
+          format: date
+          example: "2025-07-03"
+        created_at:
+          type: string
+          format: date
+          example: "2025-07-03"
+          readOnly: true
+        fields:
+          type: object
+          properties:
+            axle_box_housing_bore_dia:
+              type: string
+              example: "280 (+0.030/+0.052)"
+            bearing_seat_diameter:
+              type: string
+              example: "130.043 TO 130.068"
+            condemning_dia:
+              type: string
+              example: "825 (800-900)"
+            intermediate_wwp:
+              type: string
+              example: "20 TO 28"
+            last_shop_issue_size:
+              type: string
+              example: "837 (800-900)"
+            roller_bearing_bore_dia:
+              type: string
+              example: "130 (+0.0/-0.025)"
+            roller_bearing_outer_dia:
+              type: string
+              example: "280 (+0.0/-0.035)"
+            roller_bearing_width:
+              type: string
+              example: "93 (+0/-0.250)"
+            tread_diameter_new:
+              type: string
+              example: "915 (900-1000)"
+            variation_same_axle:
+              type: string
+              example: "0.5"
+            variation_same_bogie:
+              type: string
+              example: "5"
+            variation_same_coach:
+              type: string
+              example: "13"
+            wheel_disc_width:
+              type: string
+              example: "127 (+4/-0)"
+            wheel_gauge:
+              type: string
+              example: "1600 (+2,-1)"
+            wheel_profile:
+              type: string
+              example: "29.4 Flange Thickness"
+            extras:
+              description: Extra Data 
+              type: object
+      required:
+        - form_number
+        - submitted_by
+        - submitted_date 
+
+
+  parameters:
+    SubmittedBy:
+      name: submitted_by
+      in: query
+      schema:
+        type: string
+      description: Filter by username (case-insensitive, partial match)
+    FormNumber:
+      name: form_number
+      in: query
+      schema:
+        type: string
+      description: Filter by form number (icontains)
+    AxleBoxHousingBoreDia:
+      name: axle_box_housing_bore_dia
+      in: query
+      schema:
+        type: string
+      description: Filter by axle box housing bore diameter (icontains)
+    BearingSeatDiameter:
+      name: bearing_seat_diameter
+      in: query
+      schema:
+        type: string
+      description: Filter by bearing seat diameter (icontains)
+    CondemningDia:
+      name: condemning_dia
+      in: query
+      schema:
+        type: string
+      description: Filter by condemning diameter (icontains)
+    IntermediateWWP:
+      name: intermediate_wwp
+      in: query
+      schema:
+        type: string
+      description: Filter by intermediate WWP (icontains)
+    LastShopIssueSize:
+      name: last_shop_issue_size
+      in: query
+      schema:
+        type: string
+      description: Filter by last shop issue size (icontains)
+    RollerBearingBoreDia:
+      name: roller_bearing_bore_dia
+      in: query
+      schema:
+        type: string
+      description: Filter by roller bearing bore diameter (icontains)
+    RollerBearingOuterDia:
+      name: roller_bearing_outer_dia
+      in: query
+      schema:
+        type: string
+      description: Filter by roller bearing outer diameter (icontains)
+    RollerBearingWidth:
+      name: roller_bearing_width
+      in: query
+      schema:
+        type: string
+      description: Filter by roller bearing width (icontains)
+    TreadDiameterNew:
+      name: tread_diameter_new
+      in: query
+      schema:
+        type: string
+      description: Filter by tread diameter new (icontains)
+    VariationSameAxle:
+      name: variation_same_axle
+      in: query
+      schema:
+        type: string
+      description: Filter by variation on same axle (icontains)
+    VariationSameBogie:
+      name: variation_same_bogie
+      in: query
+      schema:
+        type: string
+      description: Filter by variation on same bogie (icontains)
+    VariationSameCoach:
+      name: variation_same_coach
+      in: query
+      schema:
+        type: string
+      description: Filter by variation on same coach (icontains)
+    WheelDiscWidth:
+      name: wheel_disc_width
+      in: query
+      schema:
+        type: string
+      description: Filter by wheel disc width (icontains)
+    WheelGauge:
+      name: wheel_gauge
+      in: query
+      schema:
+        type: string
+      description: Filter by wheel gauge (icontains)
+    WheelProfile:
+      name: wheel_profile
+      in: query
+      schema:
+        type: string
+      description: Filter by wheel profile (icontains)
+
+
+
+paths:
+ /api/forms/wheel-specifications:
+  get:
+    description: Get List of wheel Specification
+    operationId: getWheelSpecs
+    tags:
+      - Wheel Specification
+    parameters:
+      - in: query
+        name: ordering
+        description: Applies sorting of Data based on provided field
+        required: false
+        schema:
+          type: string
+          enum:
+            - created_at
+            - -created_at
+            - submitted_date
+            - -submitted_date
+      - in: query
+        name: search
+        description: |
+          Filters List by These specified fields.
+          form_number, submitted_by
+        required: false
+        schema: 
+          type: string
+      - in: query 
+        name: page
+        required: false
+        schema:
+          type: integer
+          example: 1
+      - $ref: '#/components/parameters/SubmittedBy'
+      - $ref: '#/components/parameters/FormNumber'
+      - $ref: '#/components/parameters/AxleBoxHousingBoreDia'
+      - $ref: '#/components/parameters/BearingSeatDiameter'
+      - $ref: '#/components/parameters/CondemningDia'
+      - $ref: '#/components/parameters/IntermediateWWP'
+      - $ref: '#/components/parameters/LastShopIssueSize'
+      - $ref: '#/components/parameters/RollerBearingBoreDia'
+      - $ref: '#/components/parameters/RollerBearingOuterDia'
+      - $ref: '#/components/parameters/RollerBearingWidth'
+      - $ref: '#/components/parameters/TreadDiameterNew'
+      - $ref: '#/components/parameters/VariationSameAxle'
+      - $ref: '#/components/parameters/VariationSameBogie'
+      - $ref: '#/components/parameters/VariationSameCoach'
+      - $ref: '#/components/parameters/WheelDiscWidth'
+      - $ref: '#/components/parameters/WheelGauge'
+      - $ref: '#/components/parameters/WheelProfile'
+    responses:
+      "200": 
+        description: List of Wheel specifications
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/ListPayload"
+                - type: object
+                  properties:
+                    items:
+                      type: array
+                      items:
+                        $ref: "#/components/schemas/WheelSpecs"
+
+  post:
+    description: | 
+      Create New Wheel Specs.
+      If user provided in `submitted_by` does not exists,
+      then it automatically gets created without causing any error
+    operationId: createWheelSpec
+    tags:
+      - Wheel Specification
+    requestBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/WheelSpecs'
+    responses:
+      "201":
+        description: Successfully Created Wheel specification
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WheelSpecs'

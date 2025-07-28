@@ -4,5 +4,5 @@ from forms.views import WheelSpecsView
 
 
 urlpatterns = [
-    path("wheelspecs", WheelSpecsView.as_view(), name="wheelspecs"),
+    path("wheel-specifications", WheelSpecsView.as_view(), name="wheel-specifications"),
 ]
