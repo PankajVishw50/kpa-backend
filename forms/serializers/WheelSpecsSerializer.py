@@ -53,7 +53,6 @@ class WheelSpecsSerializer(serializers.ModelSerializer):
             "submitted_date",
             "fields",
             "created_at",
-            "modified_at",
         ]
 
     def to_representation(self, instance):
