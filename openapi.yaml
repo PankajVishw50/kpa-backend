@@ -44,6 +44,11 @@ components:
     WheelSpecs:
       type: object
       properties:
+        id:
+          type: string
+          format: uuid
+          example: 3895c0be-b46e-4ee9-90ab-acb8d7ff34c0
+          readOnly: true
         form_number:
           type: string
           example: "WHEEL-2025-001"
