@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-      target: dev
+      target: prod
     env_file: ./dockerfile.env
     ports:
       - "7878:7878"

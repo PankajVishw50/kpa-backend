@@ -5,6 +5,13 @@ or if you would like to use another path
 you can set it to `LOCAL_SETTING_PATH` environment variable.
 """
 
-DEBUG = False
 # You Must Change This
 SECRET_KEY = "lkfjelkfjeljfelkjfelkfjelkfkjeklfjelkfje9fj0930jfieko"
+
+DEBUG = False
+ALLOWED_HOSTS = ["localhost"]
+
+# You Can Use variable directly from previous settings files
+SHELL_PLUS_PRE_IMPORTS += [  # type:ignore
+    ("data.sample_wheel_specs_data", "*"),
+]

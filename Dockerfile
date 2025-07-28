@@ -37,3 +37,10 @@ COPY . .
 
 CMD ["make", "runserver"]
 
+# Production Image
+FROM base AS prod
+
+RUN poetry sync --only main --compile
+COPY . .
+
+CMD ["make", "runserver"]

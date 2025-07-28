@@ -1,4 +1,8 @@
 
+BASE_DOCKER_COMPOSE=./docker-compose.yml
+DEV_DOCKER_COMPOSE=./docker-compose-dev.yml
+
+
 poetry:
 	poetry run python3 manage.py $(ARGS)
 
@@ -23,6 +27,12 @@ makemigrate: makemigations migrate
 compose-prefix:
 	docker compose $(ARGS)
 
+compose-dev-prefix:
+	docker compose \
+		-f $(BASE_DOCKER_COMPOSE) \
+		-f $(DEV_DOCKER_COMPOSE) \
+		$(ARGS)
+
 compose-up:
 	$(MAKE) compose-prefix ARGS="up -d"
 	
@@ -34,6 +44,18 @@ compose-restart:
 
 compose-down:
 	$(MAKE) compose-prefix ARGS="down" 
+
+compose-dev-up:
+	$(MAKE) compose-dev-prefix ARGS="up -d"
+	
+compose-dev-up-build:
+	$(MAKE) compose-dev-prefix ARGS="up --build -d"
+
+compose-dev-restart:
+	$(MAKE) compose-dev-prefix ARGS="restart"
+
+compose-dev-down:
+	$(MAKE) compose-dev-prefix ARGS="down" 
 
 %-bash:
 	$(MAKE) compose-prefix ARGS="exec $* bash"
