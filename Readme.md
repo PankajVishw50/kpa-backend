@@ -94,8 +94,14 @@ OR copy and paste entire openapi.yaml file
 You’ll see a full, interactive API reference with all endpoints, parameters, responses, and models.
 
 
+## Tech Stack
+- Django as backend framework
+- Django Rest Framework
+- Postgres as database
+- Docker for containerization
+- Poetry for python package management
 
-### Things to Note
+## Things to Note
 
 - By Default App runs on 0.0.0.0:7878 Port.
 - Make sure these ports are availble. if not configure project accordingly.
@@ -104,3 +110,4 @@ You’ll see a full, interactive API reference with all endpoints, parameters, r
 - You can define you own settings related to django application inside
     local/local.settings.py, this file is not tracked by git.
     there is an template availabe you can copy that `/kpa/settings/templates/local.settings.py`
+
